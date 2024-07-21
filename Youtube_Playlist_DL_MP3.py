@@ -1,87 +1,3 @@
-
-# YouTube Playlist Downloader
-
-## Description
-
-Ce script permet de télécharger des vidéos de playlists YouTube au format MP3, d'ajouter des métadonnées telles que le titre, l'artiste, l'album, le genre, et l'image de la musique, et de les organiser dans un dossier portant le nom de la playlist.
-
-## Prérequis
-
-Avant d'utiliser ce script, assurez-vous d'avoir installé les dépendances nécessaires et de disposer de `ffmpeg`.
-
-### Dépendances Python
-
-- `pytube`
-- `pydub`
-- `mutagen`
-- `requests`
-
-### Installation des dépendances
-
-Vous pouvez installer les dépendances nécessaires en utilisant `pip` :
-
-```sh
-pip install pytube pydub mutagen requests
-```
-
-### Installation de `ffmpeg`
-
-Pour Ubuntu/Debian :
-
-```sh
-sudo apt-get install ffmpeg
-```
-
-Pour macOS, vous pouvez utiliser Homebrew :
-
-```sh
-brew install ffmpeg
-```
-
-## Utilisation
-
-1. **Clonez ou téléchargez ce dépôt** et placez le script Python dans un répertoire de votre choix.
-2. **Exécutez le script** en utilisant Python.
-
-```sh
-python your_script_name.py
-```
-
-### Menu principal
-
-Lorsque vous exécutez le script, un menu s'affiche avec les options suivantes :
-
-- **1. Add playlist to download** : Ajoutez l'URL d'une playlist YouTube pour la télécharger.
-- **2. Change download path** : Changez le chemin de téléchargement par défaut.
-- **3. Exit** : Quittez le programme.
-
-## Exemple de fonctionnement
-
-1. Lancez le script :
-
-```sh
-python your_script_name.py
-```
-
-2. Choisissez l'option `1` pour ajouter une playlist.
-
-```
-Enter the YouTube playlist URL: <URL_de_votre_playlist>
-```
-
-Le script télécharge alors chaque vidéo de la playlist, les convertit en MP3, ajoute les métadonnées et les enregistre dans un dossier portant le nom de la playlist.
-
-3. Si vous souhaitez changer le chemin de téléchargement, choisissez l'option `2` :
-
-```
-Enter the new download path: <nouveau_chemin>
-```
-
-4. Pour quitter le programme, choisissez l'option `3`.
-
-## Code Source
-
-```python
 import threading
 from pytube import YouTube, Playlist
 import os
@@ -104,7 +20,7 @@ def download_and_convert_to_mp3(url, download_path, playlist_title):
         # Convert to mp3 using pydub
         audio = AudioSegment.from_file(video_file)
         audio.export(mp3_file, format='mp3')
-        
+
         # Add metadata
         audiofile = EasyID3(mp3_file)
         audiofile['title'] = yt.title
@@ -112,7 +28,7 @@ def download_and_convert_to_mp3(url, download_path, playlist_title):
         audiofile['album'] = playlist_title
         audiofile['genre'] = 'Podcast'  # or any other genre you want to set
         audiofile.save()
-        
+
         # Add album art
         try:
             video_thumbnail = yt.thumbnail_url
@@ -192,4 +108,3 @@ def main_menu():
 
 if __name__ == "__main__":
     main_menu()
-```
